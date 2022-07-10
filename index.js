@@ -1,3 +1,4 @@
+require("dotenv").config()
 const { createCanvas, registerFont } = require( "canvas");
 const fs = require("fs");
 const moment = require("moment");
@@ -15,7 +16,7 @@ const context = canvas.getContext("2d"); // create context
 
 function timeLeft() {
     var m = moment("2023-07-07");  // or whatever start date you have
-    var today = moment().startOf('day');
+    var today = moment().utc().add(7,"h").startOf('day');
  
     return Math.round(moment.duration(m - today).asDays());
 }
@@ -32,7 +33,7 @@ function createPost() {
 
     //viết chữ
     context.textAlign = "Center";
-    context.fillText("Kì thi Trung học Phổ thông Quốc gia\nnăm 2022 còn:",50, 550);
+    context.fillText("Kì thi Trung học Phổ thông Quốc gia\nnăm 2023 còn:",50, 550);
 
     //vẽ cái khung
     context.fillRect(1300, 300, 600, 600);
@@ -54,10 +55,14 @@ function createPost() {
     fs.writeFileSync(`./static/canvas.png`, imageBuffer);
 
     // superagent.post(process.env.Endpoint+"/canvas.png")\
-    superagent.post("https://https://graph.facebook.com/"+process.env.pageID+"/photos").send({
+    console.log(process.env.FBToken)
+    superagent.post("https://graph.facebook.com/"+process.env.pageID+"/photos").send({
         url:process.env.Endpoint+"/canvas.png",
         access_token:process.env.FBToken,
         message:"[Bài đăng tự động]\nNếu bạn nhìn thầy bài viết này thì tức là chỉ còn "+timeLeft()+" ngày nữa là tới kì thi THPTQG năm 2023\nNgày dự thi: 07 Jul 2023"
+    }).end((err,res) => {
+        console.log("test")
+        console.log(err)
     })
 }
 createPost()
@@ -65,7 +70,7 @@ let currentTime = moment().utc().add(7,"h")
 console.log(currentTime.minute())
 setInterval(() => {
     let currentTime = moment().utc().add(7,"h")
-    if(currentTime.hour()==21 && currentTime.minute()==51){
+    if(currentTime.hour()==6 && currentTime.minute()==00){
         console.log("Posted")
         createPost()
     }else{
