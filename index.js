@@ -5,7 +5,7 @@ const moment = require("moment");
 const express = require("express")
 const webSever = express()
 const superagent = require("superagent")
-webSever.listen(3000)
+webSever.listen(3010)
 
 webSever.use(express.static('static'))
 
@@ -65,7 +65,7 @@ function createPost() {
         console.log(err)
     })
 }
-createPost()
+
 let currentTime = moment().utc().add(7,"h")
 console.log(currentTime.minute())
 setInterval(() => {
@@ -78,3 +78,4 @@ setInterval(() => {
     }
     
 }, 60*1000);
+
