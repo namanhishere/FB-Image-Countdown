@@ -59,7 +59,7 @@ function createPost() {
     superagent.post("https://graph.facebook.com/"+process.env.pageID+"/photos").send({
         url:process.env.Endpoint+"/canvas.png",
         access_token:process.env.FBToken,
-        message:"[Bài đăng tự động]\nNếu bạn nhìn thầy bài viết này thì tức là chỉ còn "+timeLeft()+" ngày nữa là tới kì thi THPTQG năm 2023\nNgày dự thi: 07 Jul 2023"
+        message:"[Bài đăng tự động]\nNếu bạn nhìn thầy bài viết này thì tức là chỉ còn "+timeLeft()+" ngày nữa là tới kì thi THPTQG năm 2023\nNgày dự thi: 20 Jun 2023"
     }).end((err,res) => {
         console.log("test")
         console.log(err)
